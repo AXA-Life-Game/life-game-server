@@ -1,0 +1,29 @@
+{
+  "name": "life-game-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx tsc app.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AXA-Life-Game/life-game-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AXA-Life-Game/life-game-server/issues"
+  },
+  "homepage": "https://github.com/AXA-Life-Game/life-game-server#readme",
+  "dependencies": {
+    "express": "^4.21.1",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.9.0",
+    "typescript": "^5.6.3"
+  }
+}
