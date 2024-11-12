@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
 const mongoUri =
-  "mongodb://mongo:NripAdsOjSZojgqLZHuxKBBarcotVfpD@autorack.proxy.rlwy.net:18708/life-game";
+  "mongodb+srv://lucykowalski10:psw@cluster0.ym5dd.mongodb.net/scores?retryWrites=true&w=majority&appName=Cluster0";
 
 export async function connectToMongoDB() {
   try {
