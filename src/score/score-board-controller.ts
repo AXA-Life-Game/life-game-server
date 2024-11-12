@@ -8,10 +8,9 @@ scoreBoardController.get("/scores", async (req: Request, res: Response) => {
         try {
             const collection = await getCollection();
             const topScores = await collection.find({}).toArray();
-            res.status(200)
-                .json(topScores);
+            res.status(200).json(topScores);
         } catch (error: any) {
-            res.status(400).json({message: error.message});
+            res.status(500).json({message: error.message});
         }
     }
 );
@@ -22,10 +21,9 @@ scoreBoardController.get("/scores/top", async (req: Request, res: Response) => {
         try {
             const collection = await getCollection();
             const topScores = await collection.find({}).sort({score: -1}).limit(limit).toArray();
-            res.status(200)
-                .json(topScores);
+            res.status(200).json(topScores);
         } catch (error: any) {
-            res.status(400).json({message: error.message});
+            res.status(500).json({message: error.message});
         }
     }
 );
@@ -35,12 +33,13 @@ scoreBoardController.get("/score", async (req: Request, res: Response) => {
 
         try {
             const collection = await getCollection();
-            const topScores = await collection.find({playerId}).sort({score: -1}).limit(1).toArray();
-
-            res.status(200)
-                .json(topScores);
+            const topScores = await collection.findOne({playerId}, {sort: {score: -1}});
+            res.status(200).json(topScores);
+            if(topScores === null) {
+                res.status(404).json({message: "Player not found"});
+            }
         } catch (error: any) {
-            res.status(400).json({message: error.message});
+            res.status(500).json({message: error.message});
         }
     }
 );
