@@ -5,9 +5,28 @@ import {PlayerScoreSchema} from "../model/player-score";
 export const scoreBoardController = express.Router();
 
 scoreBoardController.get("/scores", async (req: Request, res: Response) => {
-        res
-            .status(200)
-            .json({message: "This is the response from the example controller"});
+        try {
+            const collection = await getCollection();
+            const topScores = await collection.find({}).toArray();
+            res.status(200)
+                .json(topScores);
+        } catch (error: any) {
+            res.status(400).json({message: error.message});
+        }
+    }
+);
+
+scoreBoardController.get("/scores/top/:limit", async (req: Request, res: Response) => {
+        const limit = parseInt(req.params.limit, 10) || 5;
+
+        try {
+            const collection = await getCollection();
+            const topScores = await collection.find({}).sort({score: -1}).limit(limit).toArray();
+            res.status(200)
+                .json(topScores);
+        } catch (error: any) {
+            res.status(400).json({message: error.message});
+        }
     }
 );
 
