@@ -16,8 +16,8 @@ scoreBoardController.get("/scores", async (req: Request, res: Response) => {
     }
 );
 
-scoreBoardController.get("/scores/top/:limit", async (req: Request, res: Response) => {
-        const limit = parseInt(req.params.limit, 10) || 5;
+scoreBoardController.get("/scores/top", async (req: Request, res: Response) => {
+        const limit = Number(req.query.limit) || 5;
 
         try {
             const collection = await getCollection();
