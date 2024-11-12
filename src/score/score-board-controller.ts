@@ -13,7 +13,6 @@ scoreBoardController.get("/scores", async (req: Request, res: Response) => {
 
 scoreBoardController.post("/score", async (req: Request, res: Response) => {
         try {
-            console.log(req);
             const scoreData = PlayerScoreSchema.parse(req.body);
             const collection = await getCollection();
             await collection.insertOne(scoreData);

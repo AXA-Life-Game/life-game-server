@@ -26,3 +26,9 @@ export async function getCollection() {
   const db = await getDatabase();
   return db.collection("player_score");
 }
+
+export async function closeConnection() {
+  if (client) {
+    await client.close();
+  }
+}
