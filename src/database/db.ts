@@ -6,7 +6,7 @@ let client: MongoClient;
 export async function connect() {
   try {
     if (!client) {
-      const client = new MongoClient(mongoUri);
+      client = new MongoClient(mongoUri);
       await client.connect();
       console.log("Connected to MongoDB");
     }
