@@ -30,6 +30,21 @@ scoreBoardController.get("/scores/top", async (req: Request, res: Response) => {
     }
 );
 
+scoreBoardController.get("/score", async (req: Request, res: Response) => {
+        const playerId = req.query.playerId;
+
+        try {
+            const collection = await getCollection();
+            const topScores = await collection.find({playerId}).sort({score: -1}).limit(1).toArray();
+
+            res.status(200)
+                .json(topScores);
+        } catch (error: any) {
+            res.status(400).json({message: error.message});
+        }
+    }
+);
+
 scoreBoardController.post("/score", async (req: Request, res: Response) => {
         try {
             const scoreData = PlayerScoreSchema.parse(req.body);
