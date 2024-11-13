@@ -11,9 +11,14 @@ const LifebarType = z.enum([
   "SECONDPILLAR",
 ]);
 
-export const LifebarsSchema = z.array(
+const LifebarsSchema = z.array(
   z.object({
     type: LifebarType,
     value: z.number(),
   })
 );
+
+export const SubmitScoreSchema = z.object({
+  playerId: z.string(),
+  lifebars: LifebarsSchema,
+});

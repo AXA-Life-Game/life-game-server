@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { getCollection } from "../database/db";
 import { PlayerScoreSchema } from "../model/score";
-import { LifebarsSchema } from "../model/lifebar";
+import { SubmitScoreSchema } from "../model/lifebar";
 
 export const scoreBoardController = express.Router();
 
@@ -53,14 +53,20 @@ scoreBoardController.get("/score", async (req: Request, res: Response) => {
 
 scoreBoardController.post("/score", async (req: Request, res: Response) => {
   try {
-    const lifebars = LifebarsSchema.parse(req.body);
-    const calculatedLifebars = lifebars.reduce((acc, lifebar) => {
-      return acc + lifebar.value; // TODO: change calculation
-    }, 0);
+    const dto = SubmitScoreSchema.parse(req.body);
+    const calculatedLifebars = dto.lifebars
+      .filter(
+        (lifebar) =>
+          lifebar.type === "THIRDPILLAR" || lifebar.type === "SECONDPILLAR"
+      )
+      .reduce((acc, lifebar) => {
+        return acc + lifebar.value;
+      }, 0);
     const scoreData = PlayerScoreSchema.parse({
-      playerId: req.body.playerId,
+      playerId: dto.playerId,
       score: calculatedLifebars,
     });
+    console.log(scoreData);
     const collection = await getCollection();
     await collection.insertOne(scoreData);
     res.status(200).json(scoreData);
