@@ -1,11 +1,11 @@
 import { MongoClient } from "mongodb";
-const mongoUri =
-  "mongodb+srv://lucykowalski10:psw@cluster0.ym5dd.mongodb.net/scores?retryWrites=true&w=majority&appName=Cluster0";
+const mongoUri = process.env.MONGODB_URI;
 let client: MongoClient;
 
 export async function connect() {
   try {
     if (!client) {
+      if (!mongoUri) throw new Error("MongoDB URI is not provided");
       client = new MongoClient(mongoUri);
       await client.connect();
       console.log("Connected to MongoDB");

@@ -16,9 +16,8 @@ scoreBoardController.get("/scores", async (req: Request, res: Response) => {
 });
 
 scoreBoardController.get("/scores/top", async (req: Request, res: Response) => {
-  const limit = Number(req.query.limit) || 5;
-
   try {
+    const limit = Number(req.query.limit) || 5;
     const collection = await getCollection();
     const topScores = await collection
       .find({})
@@ -32,9 +31,12 @@ scoreBoardController.get("/scores/top", async (req: Request, res: Response) => {
 });
 
 scoreBoardController.get("/score", async (req: Request, res: Response) => {
-  const playerId = req.query.playerId;
-
   try {
+    const playerId = req.query.playerId;
+    if (!playerId) {
+      res.status(400).json({ message: "Player ID is required" });
+      return;
+    }
     const collection = await getCollection();
     const topScores = await collection.findOne(
       { playerId },
